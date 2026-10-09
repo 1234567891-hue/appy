@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-background" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Interpretación de Resultados Bancarios - Reducción de Dimensionalidad</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "on-secondary-fixed": "#100069",
+            "secondary": "#4e45d5",
+            "surface-variant": "#d3e4fe",
+            "surface-container-highest": "#d3e4fe",
+            "surface-dim": "#cbdbf5",
+            "on-surface": "#0b1c30",
+            "primary": "#000000",
+            "secondary-fixed-dim": "#c3c0ff",
+            "on-secondary-container": "#fffbff",
+            "on-tertiary-fixed-variant": "#005137",
+            "on-primary-container": "#76849f",
+            "surface-tint": "#515f78",
+            "on-tertiary-fixed": "#002114",
+            "on-tertiary": "#ffffff",
+            "primary-fixed-dim": "#b9c7e4",
+            "secondary-fixed": "#e3dfff",
+            "inverse-on-surface": "#eaf1ff",
+            "on-surface-variant": "#44474d",
+            "error-container": "#ffdad6",
+            "surface-container-low": "#eff4ff",
+            "background": "#f8f9ff",
+            "surface": "#f8f9ff",
+            "outline": "#75777e",
+            "inverse-primary": "#b9c7e4",
+            "tertiary-fixed-dim": "#68dba9",
+            "on-primary-fixed-variant": "#39475f",
+            "on-primary-fixed": "#0d1c32",
+            "on-secondary-fixed-variant": "#372abf",
+            "on-error-container": "#93000a",
+            "on-tertiary-container": "#069669",
+            "on-secondary": "#ffffff",
+            "surface-container-high": "#dce9ff",
+            "primary-fixed": "#d6e3ff",
+            "surface-container-lowest": "#ffffff",
+            "error": "#ba1a1a",
+            "on-error": "#ffffff",
+            "tertiary": "#000000",
+            "surface-container": "#e5eeff",
+            "outline-variant": "#c5c6cd",
+            "tertiary-fixed": "#85f8c4",
+            "surface-bright": "#f8f9ff",
+            "inverse-surface": "#213145",
+            "primary-container": "#0d1c32",
+            "tertiary-container": "#002114",
+            "on-background": "#0b1c30",
+            "secondary-container": "#6860ef"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-desktop": "2.5rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "margin-tablet": "1.5rem",
+            "space-xl": "2.25rem",
+            "gutter-desktop": "1.5rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "gutter": "1rem"
+          },
+          "fontFamily": {
+            "data-mono-md": ["JetBrains Mono"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Hanken Grotesk"],
+            "headline-md": ["Hanken Grotesk"],
+            "body-sm": ["Inter"],
+            "data-mono-lg": ["JetBrains Mono"],
+            "metric-stat-mobile": ["Hanken Grotesk"],
+            "headline-sm": ["Hanken Grotesk"],
+            "display-lg-mobile": ["Hanken Grotesk"],
+            "body-md": ["Inter"],
+            "display-lg": ["Hanken Grotesk"],
+            "label-caps": ["Inter"],
+            "metric-stat": ["Hanken Grotesk"]
+          },
+          "fontSize": {
+            "data-mono-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "data-mono-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "metric-stat-mobile": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "display-lg-mobile": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "metric-stat": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md min-h-screen flex flex-col pb-20 selection:bg-surface-variant">
+<!-- TopAppBar Anchor from Shared Components -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-14 bg-surface dark:bg-primary-container shadow-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-on-surface dark:text-inverse-on-surface text-headline-sm" data-icon="analytics">analytics</span>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">Model Analytics</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Ajustes de Modelo" class="p-space-xs rounded text-on-surface-variant hover:bg-surface-container-high transition-colors" title="Ajustes de Modelo">
+<span class="material-symbols-outlined text-headline-sm" data-icon="tune">tune</span>
+</button>
+</div>
+</header>
+<!-- Main Executive Content Canvas -->
+<main class="w-full max-w-md mx-auto px-margin pt-20 flex flex-col gap-space-lg">
+<!-- Executive Header Section -->
+<section class="flex flex-col gap-space-xs">
+<!-- Status Badge -->
+<div class="inline-flex items-center gap-1.5 self-start px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-data-mono-md text-data-mono-md text-secondary uppercase tracking-wider">Modelo Validado: SelectKBest (ANOVA F-value)</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary-container tracking-tight mt-1">
+        Diagnóstico de Variables Críticas en Campañas Bancarias
+      </h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Evaluación de relevancia estadística sobre dataset de Telemarketing Bancario para predecir receptividad por rango de edad (<span class="font-data-mono-md text-data-mono-md text-on-surface font-semibold">target: age</span>).
+      </p>
+</section>
+<!-- KPI Metric Cards Grid (2x2 Mobile Layout) -->
+<section class="grid grid-cols-2 gap-space-sm">
+<!-- KPI 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-space-md rounded flex flex-col justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">K Seleccionadas</span>
+<div class="my-1.5">
+<span class="font-metric-stat-mobile text-metric-stat-mobile text-primary-container">2 <span class="text-headline-sm font-body-md text-outline font-normal">/ 16</span></span>
+</div>
+<div class="inline-flex items-center gap-1 self-start px-1.5 py-0.5 rounded bg-surface-container-low text-on-tertiary-container font-data-mono-md text-data-mono-md">
+<span class="material-symbols-outlined text-[13px]" data-icon="check_circle">check_circle</span>
+<span>-87.5% Reducción</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-space-md rounded flex flex-col justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Factor Dominante</span>
+<div class="my-1.5">
+<span class="font-headline-sm text-headline-sm text-primary-container leading-tight font-bold">Entorno Macro</span>
+</div>
+<div class="inline-flex items-center gap-1 self-start px-1.5 py-0.5 rounded bg-surface-container-low text-secondary font-data-mono-md text-data-mono-md">
+<span class="material-symbols-outlined text-[13px]" data-icon="hub">hub</span>
+<span>Alta Significancia</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-space-md rounded flex flex-col justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Tasa Euribor Media</span>
+<div class="my-1.5">
+<span class="font-metric-stat-mobile text-metric-stat-mobile text-primary-container">4.857%</span>
+</div>
+<div class="inline-flex items-center gap-1 self-start px-1.5 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-data-mono-md text-data-mono-md">
+<span class="font-medium text-secondary">euribor3m</span>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-space-md rounded flex flex-col justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Índice Empleo Macro</span>
+<div class="my-1.5">
+<span class="font-metric-stat-mobile text-metric-stat-mobile text-primary-container">5,191k</span>
+</div>
+<div class="inline-flex items-center gap-1 self-start px-1.5 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-data-mono-md text-data-mono-md">
+<span class="font-medium text-secondary">nr.employed</span>
+</div>
+</div>
+</section>
+<!-- Executive Summary Callout -->
+<section class="border-l-4 border-l-secondary bg-surface-container-lowest border-y border-r border-outline-variant p-space-md rounded-r shadow-sm">
+<div class="flex items-center gap-1.5 mb-1 text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="lightbulb">lightbulb</span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider font-semibold">Interpretación de los Hallazgos</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+        La prueba estadística <strong>ANOVA F-value</strong> determinó que las variables sociodemográficas y de contacto individual (<em>job, marital, loan, contact</em>) ofrecen menor peso explicativo en la fase primaria frente a la coyuntura económica global.
+      </p>
+<div class="mt-2 pt-2 border-t border-outline-variant/60 font-body-sm text-body-sm text-on-surface-variant leading-normal">
+        El perfil de depósito según la <strong>edad</strong> (<span class="font-data-mono-md text-data-mono-md">age</span>) está fuertemente correlacionado con el costo del dinero (<span class="font-data-mono-md text-data-mono-md text-on-surface">euribor3m</span>) y la solidez del mercado de trabajo (<span class="font-data-mono-md text-data-mono-md text-on-surface">nr.employed</span>). El <strong class="text-on-surface">timing macroeconómico</strong> condiciona sustancialmente la predisposición al ahorro.
+      </div>
+</section>
+<!-- Dimensionality Comparison & Statistical Ranking -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded p-space-md flex flex-col gap-space-md">
+<div>
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Comparativa de Dimensionalidad</h2>
+<span class="font-label-caps text-label-caps text-outline uppercase">SelectKBest</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Espacio de 16 variables filtrado a las 2 variables de máxima varianza F.</p>
+</div>
+<!-- Compact Bar Comparison -->
+<div class="flex flex-col gap-2 bg-surface p- space-sm rounded border border-outline-variant/50 p-space-sm">
+<div>
+<div class="flex justify-between text-body-sm font-medium mb-1">
+<span class="text-on-surface-variant">Dataset Original (16 atributos)</span>
+<span class="font-data-mono-md text-data-mono-md text-outline">100% Complejidad</span>
+</div>
+<div class="w-full bg-outline-variant/30 h-2 rounded-full overflow-hidden">
+<div class="bg-outline-variant h-full w-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm font-medium mb-1">
+<span class="text-primary-container font-semibold">Espacio Reducido (K=2)</span>
+<span class="font-data-mono-md text-data-mono-md text-secondary font-semibold">12.5% Dimensionalidad</span>
+</div>
+<div class="w-full bg-outline-variant/30 h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[12.5%]"></div>
+</div>
+</div>
+</div>
+<!-- Selected Attributes Breakdown Cards -->
+<div class="flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-outline uppercase">Pesos Estadísticos de Variables Seleccionadas</span>
+<!-- Feature 1 -->
+<div class="border border-outline-variant rounded p-2.5 flex flex-col gap-1.5 bg-surface-container-low/40">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="font-data-mono-lg text-data-mono-lg font-bold text-primary-container">euribor3m</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Tasa Interbancaria 3M</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-data-mono-md text-data-mono-md font-semibold">
+              ANOVA F: Rank #1
+            </span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[94%]"></div>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant font-data-mono-md text-[11px]">
+<span>Sensibilidad crediticia alta</span>
+<span>Valor medio: ~4.857</span>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="border border-outline-variant rounded p-2.5 flex flex-col gap-1.5 bg-surface-container-low/40">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="font-data-mono-lg text-data-mono-lg font-bold text-primary-container">nr.employed</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Índice Empleo Macro</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-data-mono-md text-data-mono-md font-semibold">
+              ANOVA F: Rank #2
+            </span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[88%]"></div>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant font-data-mono-md text-[11px]">
+<span>Estabilidad del mercado laboral</span>
+<span>Valor medio: ~5191.0</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Transformed Data Ledger (Muestra Representativa) -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Estructura Resultante (Muestra)</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Subconjunto procesado listo para modelado predictivo.</p>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="table_chart">table_chart</span>
+</div>
+<div class="overflow-x-auto border border-outline-variant rounded">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface border-b border-outline-variant">
+<th class="py-2 px-3 font-label-caps text-label-caps text-outline uppercase">euribor3m</th>
+<th class="py-2 px-3 font-label-caps text-label-caps text-outline uppercase">nr.employed</th>
+<th class="py-2 px-3 font-label-caps text-label-caps text-secondary uppercase font-bold">age (Target)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/60 font-data-mono-md text-data-mono-md">
+<tr class="hover:bg-surface transition-colors">
+<td class="py-2 px-3 text-on-surface">4.857</td>
+<td class="py-2 px-3 text-on-surface">5191.0</td>
+<td class="py-2 px-3 font-semibold text-primary-container">56</td>
+</tr>
+<tr class="hover:bg-surface transition-colors">
+<td class="py-2 px-3 text-on-surface">4.857</td>
+<td class="py-2 px-3 text-on-surface">5191.0</td>
+<td class="py-2 px-3 font-semibold text-primary-container">57</td>
+</tr>
+<tr class="hover:bg-surface transition-colors">
+<td class="py-2 px-3 text-on-surface">4.857</td>
+<td class="py-2 px-3 text-on-surface">5191.0</td>
+<td class="py-2 px-3 font-semibold text-primary-container">37</td>
+</tr>
+<tr class="hover:bg-surface transition-colors">
+<td class="py-2 px-3 text-on-surface">4.857</td>
+<td class="py-2 px-3 text-on-surface">5191.0</td>
+<td class="py-2 px-3 font-semibold text-primary-container">40</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="font-data-mono-md text-[11px] text-outline text-right">Mostrando 4 de 41,188 registros optimizados</span>
+</section>
+<!-- Strategic Bank Recommendations -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded p-space-md flex flex-col gap-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="policy">policy</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Recomendaciones Estratégicas</h2>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Rec 1 -->
+<div class="p-3 rounded border border-outline-variant bg-surface flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-on-surface font-semibold text-body-md">
+<span class="material-symbols-outlined text-[18px] text-on-tertiary-container" data-icon="schedule">schedule</span>
+<span>Segmentación Temporal por Euribor</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Alinear las ventanas de telemarketing según las curvas del Euribor. Los segmentos etarios de mayor edad (50+) presentan mayor aversión a la tasa y reaccionan positivamente a depósitos en ciclos de Euribor elevado, mientras que los perfiles jóvenes priorizan crédito en fases de tasas moderadas.
+          </p>
+</div>
+<!-- Rec 2 -->
+<div class="p-3 rounded border border-outline-variant bg-surface flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-on-surface font-semibold text-body-md">
+<span class="material-symbols-outlined text-[18px] text-secondary" data-icon="speed">speed</span>
+<span>Optimización Algorítmica y Eficiencia</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            La compresión de 16 a 2 variables retiene el núcleo explicativo macroeconómico reduciendo en más del 85% el coste computacional y mitigando el sobreajuste (overfitting) en los algoritmos de clasificación de propensión bancaria.
+          </p>
+</div>
+</div>
+</section>
+<!-- Export & Reporting Options -->
+<section class="flex flex-col gap-2 pt-1 pb-4">
+<button class="w-full h-11 bg-primary-container text-on-primary rounded flex items-center justify-center gap-2 font-medium hover:bg-slate-800 active:opacity-90 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span>Descargar Informe Ejecutivo (PDF)</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="h-10 bg-surface-container-lowest border border-outline-variant text-on-surface rounded flex items-center justify-center gap-1.5 font-medium hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px] text-outline" data-icon="download">download</span>
+<span class="font-body-sm text-body-sm">Exportar CSV</span>
+</button>
+<button class="h-10 bg-surface-container-lowest border border-outline-variant text-on-surface rounded flex items-center justify-center gap-1.5 font-medium hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px] text-outline" data-icon="share">share</span>
+<span class="font-body-sm text-body-sm">Compartir con Riesgos</span>
+</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Anchor from Shared Components -->
+<!-- Contextual Active: 'Overview' is active since this screen provides the core strategic diagnosis -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-space-xs bg-surface dark:bg-primary-container shadow-[0_-2px_8px_rgba(0,0,0,0.04)]">
+<!-- Item 1: Overview (Active) -->
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed font-semibold pt-1 pb-1 active:scale-95 transition-transform duration-150" href="#overview">
+<span class="material-symbols-outlined text-2xl" data-icon="dashboard">dashboard</span>
+<span class="text-label-caps font-label-caps">Overview</span>
+</a>
+<!-- Item 2: Features -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant pt-1 pb-1 hover:text-primary dark:hover:text-inverse-primary transition-colors duration-150 active:scale-95" href="#features">
+<span class="material-symbols-outlined text-2xl" data-icon="query_stats">query_stats</span>
+<span class="text-label-caps font-label-caps">Features</span>
+</a>
+<!-- Item 3: Methodology -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant pt-1 pb-1 hover:text-primary dark:hover:text-inverse-primary transition-colors duration-150 active:scale-95" href="#methodology">
+<span class="material-symbols-outlined text-2xl" data-icon="science">science</span>
+<span class="text-label-caps font-label-caps">Methodology</span>
+</a>
+<!-- Item 4: Actions -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant pt-1 pb-1 hover:text-primary dark:hover:text-inverse-primary transition-colors duration-150 active:scale-95" href="#actions">
+<span class="material-symbols-outlined text-2xl" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="text-label-caps font-label-caps">Actions</span>
+</a>
+</nav>
+</body></html>
